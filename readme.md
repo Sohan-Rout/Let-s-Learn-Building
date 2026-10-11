@@ -77,6 +77,28 @@ bun upgrade
 
 ## 3. Run the project
 
+| Folder      | Stack                                                       |
+| ----------- | ----------------------------------------------------------- |
+| `frontend/` | Next.js 16 (App Router) + TypeScript + Tailwind CSS v4      |
+| `backend/`  | Bun + TypeScript                                            |
+
+### Frontend
+
+```bash
+cd frontend
+bun install      # install dependencies
+bun run dev      # dev server → http://localhost:3000
+bun run build    # production build
+bun run start    # serve the production build
+bun run lint     # ESLint
+```
+
+All Next.js scripts run on the Bun runtime (`bun --bun next ...`), not Node.
+
+Code lives in `frontend/src/app/`. Use the `@/*` import alias for `src/*`, e.g. `import Button from "@/components/Button"`.
+
+### Backend
+
 ```bash
 cd backend
 bun install      # install dependencies
@@ -88,7 +110,7 @@ bun run start    # start normally
 
 ## 4. Why Bun only (how it's enforced)
 
-All of us must use the same package manager. Otherwise we get conflicting lockfiles and "works on my machine" bugs. The `backend/` package enforces this in four ways:
+All of us must use the same package manager. Otherwise we get conflicting lockfiles and "works on my machine" bugs. Both `frontend/` and `backend/` enforce this in four ways:
 
 1. **`engines` + `.npmrc` (`engine-strict=true`)**: npm, yarn and pnpm refuse to install and fail with an `EBADENGINE` / unsupported engine error.
 2. **`preinstall` guard (`scripts/only-bun.js`)**: if the engine check is bypassed, the install still stops with a "use Bun" message.
@@ -100,7 +122,7 @@ All of us must use the same package manager. Otherwise we get conflicting lockfi
 - ✅ Always commit `bun.lock` when you add or remove a dependency.
 - ❌ Never run `npm install`, `yarn` or `pnpm install` in this repo.
 - ❌ Never commit a `package-lock.json`, `yarn.lock` or `pnpm-lock.yaml`.
-- When adding a new package (e.g. a `frontend/`), copy `.npmrc`, `scripts/only-bun.js`, and the `engines` / `packageManager` / `preinstall` fields from `backend/package.json`.
+- When adding another package folder, copy `.npmrc`, `scripts/only-bun.js`, and the `engines` / `packageManager` / `preinstall` fields from `backend/package.json`.
 
 ---
 
