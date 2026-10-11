@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored sqlite-wasm runtime (copied on postinstall).
+    "public/sqlite-wasm/**",
   ]),
 ]);
 

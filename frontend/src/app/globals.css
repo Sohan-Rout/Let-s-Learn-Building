@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme inline {
+  --font-grotesque: var(--next-font-darker-grotesque);
+  --font-syne: var(--next-font-syne);
+}

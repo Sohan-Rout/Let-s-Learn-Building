@@ -97,6 +97,28 @@ All Next.js scripts run on the Bun runtime (`bun --bun next ...`), not Node.
 
 Code lives in `frontend/src/app/`. Use the `@/*` import alias for `src/*`, e.g. `import Button from "@/components/Button"`.
 
+#### Offline cache (SQLite in the browser)
+
+The frontend has a real SQLite database stored on the user's device (`@sqlite.org/sqlite-wasm`, kept in the browser's private file storage). The app keeps showing data on a choppy or dropped connection.
+
+```tsx
+"use client";
+import { useCachedFetch } from "@/hooks/use-cached-fetch";
+
+const { data, isLoading, fromCache, stale, online, refresh } = useCachedFetch<Item[]>("/api/items");
+// Shows the cached copy instantly, refreshes from the network, keeps the cached copy if the request fails.
+```
+
+| Need                                   | Use                                                     |
+| -------------------------------------- | ------------------------------------------------------- |
+| Fetch data with offline fallback       | `useCachedFetch(url)` or `cachedFetch(url)`             |
+| Store/read anything yourself           | `cacheSet(key, value, ttlMs?)` / `cacheGet(key)`        |
+| Send a write that survives going offline | `sendOrQueue(url, { method, body })`. Replays automatically when back online |
+| Show an offline banner                 | `useOnlineStatus()`                                     |
+| Run your own SQL                       | `query(sql, params)` from `@/lib/sqlite/client`         |
+
+The code is in `src/lib/sqlite/`, and the tables are defined in `worker.ts`. `bun install` copies the SQLite runtime into `public/sqlite-wasm/` (git-ignored) because Turbopack can't bundle it.
+
 ### Backend
 
 ```bash

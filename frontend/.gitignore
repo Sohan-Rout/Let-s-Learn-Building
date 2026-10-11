@@ -45,3 +45,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sqlite-wasm runtime, copied from node_modules on postinstall
+/public/sqlite-wasm/
