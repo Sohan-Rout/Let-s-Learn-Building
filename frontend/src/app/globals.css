@@ -4,3 +4,12 @@
   --font-grotesque: var(--next-font-darker-grotesque);
   --font-syne: var(--next-font-syne);
 }
+
+@theme {
+  --color-forest: #2e4a3b;
+  --color-sage: #527052;
+  --color-cream: #fff5e8;
+  --color-coral: #e95770;
+  --color-peach: #f8c9ad;
+  --color-charcoal: #292d29;
+}

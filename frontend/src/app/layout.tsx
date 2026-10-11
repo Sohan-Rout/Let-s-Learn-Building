@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${darkerGrotesque.variable} ${syne.variable}`}>
-      <body className="font-grotesque">
+      <body className="bg-cream font-grotesque text-charcoal">
         {children}
         <OfflineSync />
       </body>
